@@ -1,5 +1,6 @@
 import 'package:drawingai/app/data/drawCommand.dart';
 import 'package:drawingai/app/data/myPainter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -47,7 +48,23 @@ class HomeView extends GetView<HomeController> {
                 SizedBox(
                   height: 10,
                 ),
-                customButton(icon: Icons.draw)
+                customButtonWithImage(asset: "assets/images/slash.png"),
+                SizedBox(
+                  height: 10,
+                ),
+                customButton(icon: FontAwesomeIcons.circle),
+                SizedBox(
+                  height: 10,
+                ),
+                customButton(icon: FontAwesomeIcons.square),
+                SizedBox(
+                  height: 10,
+                ),
+                customButton(icon: CupertinoIcons.triangle),
+                SizedBox(
+                  height: 10,
+                ),
+                customButton(icon: CupertinoIcons.triangle_righthalf_fill)
               ],
             ),
           ),
@@ -61,8 +78,39 @@ class HomeView extends GetView<HomeController> {
                   Expanded(
                       flex: 1,
                       child: Container(
-                          // decoration: BoxDecoration(color: Colors.grey),
-                          )),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(children: [
+                              CustomBorderedButton(
+                                  title: "Undo", icon: FontAwesomeIcons.undo),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              CustomBorderedButton(
+                                  title: "Redo", icon: FontAwesomeIcons.redo),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              CustomBorderedButton(
+                                  title: "Clear",
+                                  icon: FontAwesomeIcons.noteSticky),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              CustomBorderedButton(
+                                  title: "Lock",
+                                  icon: FontAwesomeIcons.unlock,
+                                  noBorder: true)
+                            ]),
+                            CustomBorderedButton(
+                                title: "Download",
+                                icon: Icons.download,
+                                noBorder: true)
+                          ],
+                        ),
+                        // decoration: BoxDecoration(color: Colors.grey),
+                      )),
                   Expanded(
                     flex: 7,
                     child: Container(
@@ -150,6 +198,46 @@ class HomeView extends GetView<HomeController> {
       //   ],
       // ),
     ));
+  }
+
+  static CustomBorderedButton(
+      {required String title,
+      required IconData icon,
+      bool? noBorder,
+      double? hPadding}) {
+    return Container(
+      padding: EdgeInsets.all(2),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          gradient:
+              LinearGradient(colors: [Color(0xFF5800A5), Color(0xFFA60053)])),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: hPadding ?? 16, vertical: 10),
+        decoration: noBorder == null
+            ? BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.grey.shade900)
+            : noBorder
+                ? BoxDecoration()
+                : BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.grey.shade900),
+        child: Row(children: [
+          Icon(
+            icon,
+            color: Colors.white,
+            size: 15,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            title,
+            style: TextStyle(fontSize: 16, color: Colors.white),
+          )
+        ]),
+      ),
+    );
   }
 
   static customButton({required IconData icon}) {
