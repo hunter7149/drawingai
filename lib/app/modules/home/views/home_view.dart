@@ -1,5 +1,6 @@
 import 'package:drawingai/app/data/drawCommand.dart';
 import 'package:drawingai/app/data/myPainter.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
@@ -23,103 +24,116 @@ class HomeView extends GetView<HomeController> {
       width: MediaQuery.of(context).size.width,
       child: Row(
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(color: Colors.grey.shade900),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 40,
-                ),
-                customButton(icon: Icons.edit_outlined),
-                SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    controller.dcontroller.clear();
-                  },
-                  child: customButton(icon: FontAwesomeIcons.eraser),
-                ),
-                Obx(
-                  () => Container(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    // height: 60,
-                    child: Column(children: [
-                      Text(
-                        "Size: (${controller.strokeWidth.value})",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              controller.decreaseStrokeWidth();
-                              controller.dcontroller.setStyle(
-                                  strokeWidth: controller.strokeWidth.value);
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              child: Center(
-                                child: Icon(
-                                  Icons.remove,
-                                  size: 30,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              controller.increaseStrokeWidth();
-                              controller.dcontroller.setStyle(
-                                  strokeWidth: controller.strokeWidth.value);
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              child: Center(
-                                child: Icon(
-                                  Icons.add,
-                                  size: 30,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      )
-                    ]),
+          Expanded(
+            flex: 2,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(color: Colors.grey.shade900),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 40,
                   ),
-                ),
-                customButtonWithImage(asset: "assets/images/curve.png"),
-                SizedBox(
-                  height: 10,
-                ),
-                customButtonWithImage(asset: "assets/images/slash.png"),
-                SizedBox(
-                  height: 10,
-                ),
-                customButton(icon: FontAwesomeIcons.circle),
-                SizedBox(
-                  height: 10,
-                ),
-                customButton(icon: FontAwesomeIcons.square),
-                SizedBox(
-                  height: 10,
-                ),
-                customButton(icon: CupertinoIcons.triangle),
-                SizedBox(
-                  height: 10,
-                ),
-                customButton(icon: CupertinoIcons.triangle_righthalf_fill)
-              ],
+                  InkWell(
+                    onTap: () async {
+                      Color color = await showColorPickerDialog(
+                          context, controller.selectedColor.value);
+                      print(color);
+                      controller.stokeColorUpdater(color: color);
+                    },
+                    child: customButton(icon: Icons.edit),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // controller.dcontroller.clear();
+                    },
+                    child: customButton(icon: FontAwesomeIcons.eraser),
+                  ),
+                  Obx(
+                    () => Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      // height: 60,
+                      child: Column(children: [
+                        Text(
+                          "Size: (${controller.strokeWidth.value})",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                controller.decreaseStrokeWidth();
+                                controller.dcontroller.setStyle(
+                                    strokeWidth: controller.strokeWidth.value);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.remove,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                controller.increaseStrokeWidth();
+                                controller.dcontroller.setStyle(
+                                    strokeWidth: controller.strokeWidth.value);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.add,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ]),
+                    ),
+                  ),
+                  customButtonWithImage(asset: "assets/images/curve.png"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  customButtonWithImage(asset: "assets/images/slash.png"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  customButton(icon: FontAwesomeIcons.circle),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  customButton(icon: FontAwesomeIcons.square),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  customButton(icon: CupertinoIcons.triangle),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  customButton(icon: CupertinoIcons.triangle_righthalf_fill)
+                ],
+              ),
             ),
           ),
           Expanded(
-            flex: 5,
+            flex: MediaQuery.of(context).size.width > 600 ? 18 : 5,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(color: Colors.grey.shade400),
@@ -127,54 +141,74 @@ class HomeView extends GetView<HomeController> {
                 children: [
                   Expanded(
                       flex: 1,
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(children: [
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Container(
+                          // width: MediaQuery.of(context).size.width - 200,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    controller.dcontroller.undo();
+                                  },
+                                  child: CustomBorderedButton(
+                                      title: "Undo",
+                                      icon: FontAwesomeIcons.undo),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    controller.dcontroller.redo();
+                                  },
+                                  child: CustomBorderedButton(
+                                      title: "Redo",
+                                      icon: FontAwesomeIcons.redo),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    controller.dcontroller.clear();
+                                  },
+                                  child: CustomBorderedButton(
+                                      title: "Clear",
+                                      icon: FontAwesomeIcons.noteSticky),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    controller.lockStatusUpdater();
+                                  },
+                                  child: CustomBorderedButton(
+                                      title: "Lock",
+                                      icon: FontAwesomeIcons.unlock,
+                                      noBorder: true),
+                                )
+                              ]),
+                              SizedBox(
+                                width: 20,
+                              ),
                               GestureDetector(
-                                onTap: () {
-                                  controller.dcontroller.undo();
+                                onTap: () async {
+                                  var image = await controller.dcontroller
+                                      .getImageData();
+                                  print(image.runtimeType);
                                 },
                                 child: CustomBorderedButton(
-                                    title: "Undo", icon: FontAwesomeIcons.undo),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  controller.dcontroller.redo();
-                                },
-                                child: CustomBorderedButton(
-                                    title: "Redo", icon: FontAwesomeIcons.redo),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  controller.dcontroller.clear();
-                                },
-                                child: CustomBorderedButton(
-                                    title: "Clear",
-                                    icon: FontAwesomeIcons.noteSticky),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              CustomBorderedButton(
-                                  title: "Lock",
-                                  icon: FontAwesomeIcons.unlock,
-                                  noBorder: true)
-                            ]),
-                            CustomBorderedButton(
-                                title: "Download",
-                                icon: Icons.download,
-                                noBorder: true)
-                          ],
+                                    title: "Download",
+                                    icon: Icons.download,
+                                    noBorder: true),
+                              )
+                            ],
+                          ),
                         ),
-                        // decoration: BoxDecoration(color: Colors.grey),
                       )),
                   Expanded(
                     flex: 7,
