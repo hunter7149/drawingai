@@ -4,8 +4,26 @@ import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  DrawingController dcontroller =
-      DrawingController(config: DrawConfig(contentType: Type));
+  RxDouble strokeWidth = 1.0.obs;
+
+  increaseStrokeWidth() {
+    strokeWidth.value++;
+    update();
+  }
+
+  decreaseStrokeWidth() {
+    if (strokeWidth.value != 1 && strokeWidth.value > 1) {
+      strokeWidth.value--;
+    } else
+      strokeWidth.value = 1.0;
+
+    update();
+  }
+
+  DrawingController dcontroller = DrawingController(
+      config: DrawConfig(
+    contentType: Type,
+  ));
   // Rx<Color> selectedColor = Colors.red.obs;
   // RxDouble strokeWidth = 10.0.obs;
   // RxList<DrawCommand> commands = <DrawCommand>[].obs;

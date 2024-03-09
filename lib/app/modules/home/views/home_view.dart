@@ -41,8 +41,58 @@ class HomeView extends GetView<HomeController> {
                   },
                   child: customButton(icon: FontAwesomeIcons.eraser),
                 ),
-                SizedBox(
-                  height: 60,
+                Obx(
+                  () => Container(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    // height: 60,
+                    child: Column(children: [
+                      Text(
+                        "Size: (${controller.strokeWidth.value})",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              controller.decreaseStrokeWidth();
+                              controller.dcontroller.setStyle(
+                                  strokeWidth: controller.strokeWidth.value);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              child: Center(
+                                child: Icon(
+                                  Icons.remove,
+                                  size: 30,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              controller.increaseStrokeWidth();
+                              controller.dcontroller.setStyle(
+                                  strokeWidth: controller.strokeWidth.value);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              child: Center(
+                                child: Icon(
+                                  Icons.add,
+                                  size: 30,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    ]),
+                  ),
                 ),
                 customButtonWithImage(asset: "assets/images/curve.png"),
                 SizedBox(
@@ -82,19 +132,34 @@ class HomeView extends GetView<HomeController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(children: [
-                              CustomBorderedButton(
-                                  title: "Undo", icon: FontAwesomeIcons.undo),
+                              GestureDetector(
+                                onTap: () {
+                                  controller.dcontroller.undo();
+                                },
+                                child: CustomBorderedButton(
+                                    title: "Undo", icon: FontAwesomeIcons.undo),
+                              ),
                               SizedBox(
                                 width: 10,
                               ),
-                              CustomBorderedButton(
-                                  title: "Redo", icon: FontAwesomeIcons.redo),
+                              GestureDetector(
+                                onTap: () {
+                                  controller.dcontroller.redo();
+                                },
+                                child: CustomBorderedButton(
+                                    title: "Redo", icon: FontAwesomeIcons.redo),
+                              ),
                               SizedBox(
                                 width: 10,
                               ),
-                              CustomBorderedButton(
-                                  title: "Clear",
-                                  icon: FontAwesomeIcons.noteSticky),
+                              GestureDetector(
+                                onTap: () {
+                                  controller.dcontroller.clear();
+                                },
+                                child: CustomBorderedButton(
+                                    title: "Clear",
+                                    icon: FontAwesomeIcons.noteSticky),
+                              ),
                               SizedBox(
                                 width: 10,
                               ),
