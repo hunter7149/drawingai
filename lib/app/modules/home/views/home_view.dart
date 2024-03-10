@@ -48,6 +48,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      controller.dcontroller.setStyle(color: Colors.white);
                       // controller.dcontroller.clear();
                     },
                     child: customButton(icon: FontAwesomeIcons.eraser),
@@ -64,6 +65,7 @@ class HomeView extends GetView<HomeController> {
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -141,75 +143,140 @@ class HomeView extends GetView<HomeController> {
                 children: [
                   Expanded(
                       flex: 1,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Container(
+                      child: Container(
+                          width: double.maxFinite,
                           // width: MediaQuery.of(context).size.width - 200,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    controller.dcontroller.undo();
-                                  },
-                                  child: CustomBorderedButton(
-                                      title: "Undo",
-                                      icon: FontAwesomeIcons.undo),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    controller.dcontroller.redo();
-                                  },
-                                  child: CustomBorderedButton(
-                                      title: "Redo",
-                                      icon: FontAwesomeIcons.redo),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    controller.dcontroller.clear();
-                                  },
-                                  child: CustomBorderedButton(
-                                      title: "Clear",
-                                      icon: FontAwesomeIcons.noteSticky),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    controller.lockStatusUpdater();
-                                  },
-                                  child: CustomBorderedButton(
-                                      title: "Lock",
-                                      icon: FontAwesomeIcons.unlock,
-                                      noBorder: true),
+                          child: MediaQuery.of(context).size.width > 600
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          controller.dcontroller.undo();
+                                        },
+                                        child: CustomBorderedButton(
+                                            title: "Undo",
+                                            icon: FontAwesomeIcons.undo),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          controller.dcontroller.redo();
+                                        },
+                                        child: CustomBorderedButton(
+                                            title: "Redo",
+                                            icon: FontAwesomeIcons.redo),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          controller.dcontroller.clear();
+                                        },
+                                        child: CustomBorderedButton(
+                                            title: "Clear",
+                                            icon: FontAwesomeIcons.noteSticky),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          controller.lockStatusUpdater();
+                                        },
+                                        child: CustomBorderedButton(
+                                            title: "Lock",
+                                            icon: FontAwesomeIcons.unlock,
+                                            noBorder: true),
+                                      )
+                                    ]),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        print("Download button clicked!");
+                                        await controller.imageSaver();
+                                      },
+                                      child: CustomBorderedButton(
+                                          title: "Download",
+                                          icon: Icons.download,
+                                          noBorder: true),
+                                    )
+                                  ],
                                 )
-                              ]),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              GestureDetector(
-                                onTap: () async {
-                                  var image = await controller.dcontroller
-                                      .getImageData();
-                                  print(image.runtimeType);
-                                },
-                                child: CustomBorderedButton(
-                                    title: "Download",
-                                    icon: Icons.download,
-                                    noBorder: true),
-                              )
-                            ],
-                          ),
-                        ),
-                      )),
+                              : SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            controller.dcontroller.undo();
+                                          },
+                                          child: CustomBorderedButton(
+                                              title: "Undo",
+                                              icon: FontAwesomeIcons.undo),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            controller.dcontroller.redo();
+                                          },
+                                          child: CustomBorderedButton(
+                                              title: "Redo",
+                                              icon: FontAwesomeIcons.redo),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            controller.dcontroller.clear();
+                                          },
+                                          child: CustomBorderedButton(
+                                              title: "Clear",
+                                              icon:
+                                                  FontAwesomeIcons.noteSticky),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            controller.lockStatusUpdater();
+                                          },
+                                          child: CustomBorderedButton(
+                                              title: "Lock",
+                                              icon: FontAwesomeIcons.unlock,
+                                              noBorder: true),
+                                        )
+                                      ]),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () async {
+                                          print("Download button clicked!");
+                                          await controller.imageSaver();
+                                        },
+                                        child: CustomBorderedButton(
+                                            title: "Download",
+                                            icon: Icons.download,
+                                            noBorder: true),
+                                      )
+                                    ],
+                                  ),
+                                ))),
                   Expanded(
                     flex: 7,
                     child: Container(

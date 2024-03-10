@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:drawingai/app/data/drawCommand.dart';
+import 'package:drawingai/app/data/saveImage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:get/get.dart';
@@ -23,7 +24,9 @@ class HomeController extends GetxController {
 
   imageSaver() async {
     var byteImage = await dcontroller.getImageData();
+    print("hello!");
     image.value = byteImage!.buffer.asUint8List() ?? Uint8List(0);
+    await saveImageToLocalFile(image.value!);
   }
 
   RxDouble strokeWidth = 1.0.obs;
